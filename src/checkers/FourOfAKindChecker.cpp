@@ -1,0 +1,12 @@
+#include <iostream>
+#include "checkers/FourOfAKindChecker.h"
+
+HandRank FourOfAKindChecker::check(const Hand& hand) {
+    if (hand.value == static_cast<int>(HandRank::FOUR_OF_A_KIND)) {
+        std::cout << "Detected FOUR OF A KIND\n";
+        return HandRank::FOUR_OF_A_KIND;
+    }
+    if (nextChecker)
+        return nextChecker->check(hand);
+    return HandRank::HIGH_CARD;
+}
