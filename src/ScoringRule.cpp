@@ -1,15 +1,15 @@
 #include <iostream>
-#include "ScoringRule.h"
+#include "../include/ScoringRule.h" // Gunakan relative path jika diperlukan compiler
 
 ScoringRule::ScoringRule() {
-    // Build the chain from highest to lowest rank
+    // Build the chain dari susunan (rank) BALATRO TERTINGGI hingga TERENDAH
+    flushFiveChecker.setNext(&flushHouseChecker);
+    flushHouseChecker.setNext(&fiveOfAKindChecker);
+    fiveOfAKindChecker.setNext(&royalFlushChecker);
     royalFlushChecker.setNext(&straightFlushChecker);
-    straightFlushChecker.setNext(&fiveOfAKindChecker);
-    fiveOfAKindChecker.setNext(&fourOfAKindChecker);
-    fourOfAKindChecker.setNext(&flushHouseChecker);
-    flushHouseChecker.setNext(&fullHouseChecker);
-    fullHouseChecker.setNext(&flushFiveChecker);
-    flushFiveChecker.setNext(&flushChecker);
+    straightFlushChecker.setNext(&fourOfAKindChecker);
+    fourOfAKindChecker.setNext(&fullHouseChecker);
+    fullHouseChecker.setNext(&flushChecker);
     flushChecker.setNext(&straightChecker);
     straightChecker.setNext(&threeOfAKindChecker);
     threeOfAKindChecker.setNext(&twoPairChecker);
@@ -19,7 +19,8 @@ ScoringRule::ScoringRule() {
 
 int ScoringRule::scoreHand(const Hand& hand) {
     std::cout << "Calculating hand score...\n";
-    HandRank rank = royalFlushChecker.check(hand);
+    // Karena rantai sekarang dimulai dari Flush Five, ubah panggilannya ke sini:
+    HandRank rank = flushFiveChecker.check(hand); 
     int score = convertRankToScore(rank);
     std::cout << "Final score = " << score << "\n";
     return score;
@@ -27,24 +28,24 @@ int ScoringRule::scoreHand(const Hand& hand) {
 
 int ScoringRule::convertRankToScore(HandRank rank) {
     switch (rank) {
+    case HandRank::FLUSH_FIVE:
+        return 160; 
+    case HandRank::FLUSH_HOUSE:
+        return 140;
+    case HandRank::FIVE_OF_A_KIND:
+        return 120;
     case HandRank::ROYAL_FLUSH:
         return 100;
     case HandRank::STRAIGHT_FLUSH:
         return 90;
-    case HandRank::FIVE_OF_A_KIND:
-        return 85;
     case HandRank::FOUR_OF_A_KIND:
-        return 50;
-    case HandRank::FLUSH_HOUSE:
-        return 40;
+        return 60;
     case HandRank::FULL_HOUSE:
-        return 35;
-    case HandRank::FLUSH_FIVE:
-        return 32;
+        return 40;
     case HandRank::FLUSH:
-        return 30;
+        return 35;
     case HandRank::STRAIGHT:
-        return 25;
+        return 30;
     case HandRank::THREE_OF_A_KIND:
         return 20;
     case HandRank::TWO_PAIR:
