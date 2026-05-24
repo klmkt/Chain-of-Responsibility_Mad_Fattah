@@ -2,7 +2,7 @@
 #include "checkers/StraightFlushChecker.h"
 
 HandRank StraightFlushChecker::check(const Hand& hand) {
-    if (hand.value == static_cast<int>(HandRank::STRAIGHT_FLUSH)) {
+    if (hand.isStraight() && hand.isFlush()) {
         std::cout << "Detected STRAIGHT FLUSH\n";
         return HandRank::STRAIGHT_FLUSH;
     }
