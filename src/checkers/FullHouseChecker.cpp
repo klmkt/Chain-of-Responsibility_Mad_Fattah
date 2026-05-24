@@ -2,7 +2,7 @@
 #include "checkers/FullHouseChecker.h"
 
 HandRank FullHouseChecker::check(const Hand& hand) {
-    if (hand.value == static_cast<int>(HandRank::FULL_HOUSE)) {
+    if (hand.isFullHouse()) {
         std::cout << "Detected FULL HOUSE\n";
         return HandRank::FULL_HOUSE;
     }
