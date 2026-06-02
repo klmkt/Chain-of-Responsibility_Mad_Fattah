@@ -10,8 +10,9 @@ void GameManager::runSession() {
     }
 
     Hand hand = handGenerator.generateHand();
-    handPlayer.playHand(hand);
-    int score = scoringRule.scoreHand(hand);
+    ChosenHand chosenHand = handPlayer.playHand(hand);
+    const Hand& scoredHand = chosenHand.toHand();
+    int score = scoringRule.scoreHand(scoredHand);
 
     int targetScore = sessionState.currentBlind->getTargetScore(sessionState.ante);
     bool win = score >= targetScore;
