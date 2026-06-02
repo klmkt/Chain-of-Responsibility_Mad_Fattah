@@ -3,8 +3,7 @@
 #include "HandGenerator.h"
 #include "HandPlayer.h"
 #include "ScoringRule.h"
-#include "BlindRule.h"
-#include "RewardRule.h"
+#include "RunSessionService.h"
 
 class GameManager
 {
@@ -15,6 +14,6 @@ private:
     HandGenerator handGenerator;
     HandPlayer handPlayer;
     ScoringRule scoringRule;
-    BlindRule blindRule;
-    RewardRule rewardRule;
+    RunSessionService runSessionService;
+    RunSessionState sessionState;
 };
